@@ -42,8 +42,8 @@ class DefenseStrategie(Strategy):
     def __init__(self,name="defnse"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
-        if state.ball.position.x>75:
-            return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(-45,-100))
+        if state.ball.position.x>90:
+            return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(-50,0))
     
     
     
@@ -63,7 +63,7 @@ class Attaque2Strategie(Strategy):
                 return SoccerAction(vb-vp,vb1-vp)
         else :
             if state.ball.position.x<settings.GAME_WIDTH-40:
-                return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(1,0))
+                return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(1,0.2))
             else :
                 return SoccerAction(vb-vp,0.1*(vb2-vp))
         #return SoccerAction(vecteur_vitesse,vecteur_shoot)
