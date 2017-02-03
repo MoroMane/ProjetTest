@@ -38,8 +38,10 @@ class Attaque2Strategie(Strategy):
         #return SoccerAction(vecteur_vitesse,vecteur_shoot)
 
 class DefenseStrategie(Strategy):
-    def __init__(self,name="defnse"):
+    def __init__(self,name="defense"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
-        if state.ball.position.x>75:
-            return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(-45,-100))
+        mystate = toolboxmodif.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif.MyAction(mystate)
+        return myaction.action_def()
+

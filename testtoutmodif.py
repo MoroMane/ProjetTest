@@ -7,6 +7,7 @@ Created on Mon Jan 23 18:52:56 2017
 
 import toolboxmodif
 
+
 from soccersimulator.strategies  import Strategy
 from soccersimulator.mdpsoccer import SoccerTeam, Simulation
 from soccersimulator.gui import SimuGUI,show_state,show_simu
@@ -44,7 +45,7 @@ class Attaque2Strategie(Strategy):
 #        if state.ball.position.x>75:
 #            return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(-50,-50))
 class DefenseStrategie(Strategy):
-    def __init__(self,name="defnse"):
+    def __init__(self,name="defense"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
         mystate = toolboxmodif.MyState(state,idteam,idplayer)
@@ -56,7 +57,7 @@ team2 = SoccerTeam(name="team2",login="etu2")
 team1.add("Cavani",Attaque2Strategie())
 #team1.add("Murasakibara",Attaque2Strategie())
  #Strategie qui ne fait rien
-team2.add("Paul",Attaque2Strategie())
+team2.add("Paul",DefenseStrategie())
 #team2.add("Kagami",Attaque2Strategie())   #Strategie aleatoire
 
 #Creation d'une partie
