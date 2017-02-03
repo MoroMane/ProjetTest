@@ -53,7 +53,7 @@ class DefenseStrategie(Strategy):
 
 team1 = SoccerTeam(name="team1",login="etu1")
 team2 = SoccerTeam(name="team2",login="etu2")
-team1.add("Cavani",DefenseStrategie())
+team1.add("Cavani",Attaque2Strategie())
 #team1.add("Murasakibara",Attaque2Strategie())
  #Strategie qui ne fait rien
 team2.add("Paul",Attaque2Strategie())

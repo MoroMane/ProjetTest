@@ -84,7 +84,7 @@ class MyAction(object):
     def dribble_team1(self):
         return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(1,0.2))
     def dribble_team2(self):
-             return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(-1,0.2))
+             return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(-1,-0.2))
     def action_attaquant(self):
         if self.state.idteam==1:
             if self.state.ball_positionX()<settings.GAME_WIDTH-40:
