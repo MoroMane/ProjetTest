@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan 23 18:52:56 2017
+Created on Mon Jan 30 19:35:31 2017
 
 @author: 3520543
 """
+
 
 import toolboxmodif
 
@@ -36,30 +37,9 @@ class Attaque2Strategie(Strategy):
         return myaction.action_attaquant()
         #return SoccerAction(vecteur_vitesse,vecteur_shoot)
 
-#class DefenseStrategie(Strategy):
-#    def __init__(self,name="defnse"):
-#        Strategy.__init__(self,name)
-#    def compute_strategy(self,state,idteam,idplayer):
-#        
-#        if state.ball.position.x>75:
-#            return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(-50,-50))
 class DefenseStrategie(Strategy):
     def __init__(self,name="defnse"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
-        mystate = toolboxmodif.MyState(state,idteam,idplayer)
-        myaction= toolboxmodif.MyAction(mystate)
-        return myaction.action_def()
-
-team1 = SoccerTeam(name="team1",login="etu1")
-team2 = SoccerTeam(name="team2",login="etu2")
-team1.add("Cavani",DefenseStrategie())
-#team1.add("Murasakibara",Attaque2Strategie())
- #Strategie qui ne fait rien
-team2.add("Paul",Attaque2Strategie())
-#team2.add("Kagami",Attaque2Strategie())   #Strategie aleatoire
-
-#Creation d'une partie
-simu = Simulation(team1,team2)
-#Jouer et afficher la partie
-show_simu(simu)
+        if state.ball.position.x>75:
+            return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(-45,-100))

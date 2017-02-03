@@ -65,8 +65,6 @@ class MyState(object):
 #            #return self.key[1].my_position()
 #    
 #    
-#    def degagement(self,p): #p=position du dégagement
-#        return SoccerAction(self.aller_vers_balle(),self.shoot(p))
 
 
 class MyAction(object):
@@ -86,7 +84,7 @@ class MyAction(object):
     def dribble_team1(self):
         return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(1,0.2))
     def dribble_team2(self):
-             return SoccerAction(self.aller_vers_balle(),Vector2D(-1,0))
+             return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(-1,0.2))
     def action_attaquant(self):
         if self.state.idteam==1:
             if self.state.ball_positionX()<settings.GAME_WIDTH-40:
@@ -94,8 +92,19 @@ class MyAction(object):
             else : 
                 return self.shoot_but()
         else :
-            if self.ball_positionY()>settings.GAME_WIDTH-110:
+            if self.state.ball_positionX()>settings.GAME_WIDTH-110:
                 return self.dribble_team2()
             else :
                 return self.shoot_but()
+                
     
+    def degagement(self): #p=position du dégagement
+        return self.aller_vers_balle()+self.shoot_but()
+        
+    def action_def(self):
+        if self.state.idteam==1:
+            if self.state.ball_positionX()<75:
+                return self.degagement()
+        else :
+            if self.state.ball_positionX()>75:
+                return self.degagement()
