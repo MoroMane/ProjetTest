@@ -102,6 +102,15 @@ class MyAction(object):
 #    def dribble_team2(self):
 #             return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(-1,-0.2))
     
+    def degagement(self): #p=position du dégagement
+        return self.aller_vers_balle()+self.shoot_but()
+
+    def passe(self):
+        if self.state.idteam == 1:
+            return self.shoot(Vector2D(90,45))
+        else :
+            return self.shoot(Vector2D(60,45))
+
     def action_attaquant(self):
         if self.state.idteam==1:
             if ((self.state.ball_positionX()<settings.GAME_WIDTH-40)):
@@ -125,11 +134,7 @@ class MyAction(object):
                 return self.aller(Vector2D(125,45))
             else:
                 return self.degagement()
-      
-    
-    def degagement(self): #p=position du dégagement
-        return self.aller_vers_balle()+self.shoot_but()
-        
+              
     def action_def(self):
         if self.state.idteam==1:
             if self.state.ball_positionX()<80:
@@ -141,3 +146,25 @@ class MyAction(object):
                 return self.degagement()
             else :
                 return self.aller(Vector2D(115,45))
+    def action_milieu(self):
+        if self.state.idteam==1:
+            if self.state.ball_positionX()<85:
+                return self.passe()
+            else : 
+                 return self.aller(Vector2D(35,45))
+        else :
+            if self.state.ball_positionX()>65:
+                return self.passe()
+            else :
+                return self.aller(Vector2D(115,45))
+    def action_attaquant4(self):
+        if self.state.idteam==1:
+            if ((self.state.ball_positionX()<settings.GAME_WIDTH-40)):
+                return self.pousse_ball()
+            else : 
+                return self.shoot_but()
+        else :
+            if self.state.ball_positionX()>settings.GAME_WIDTH-110:
+                return self.pousse_ball()
+            else :
+                return self.shoot_but()            

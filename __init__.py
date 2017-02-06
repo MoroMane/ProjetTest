@@ -12,16 +12,18 @@ def get_team(i):
     if i==1:
         team1 = SoccerTeam(name="Toho",login="etu1")
         team1.add("Landers",Attaque2Strategie())
+        return team1
     elif i==2:
         team2 = SoccerTeam(name="team2",login="etu2")
         team2.add("Micro-Ice",DefenseStrategie())
         team2.add("D-Joke",Attaque2Strategie())
+        return team2
     else : 
         team4 = SoccerTeam(name="Snow Kids",login="etu4")
         team4.add("Thran",DefenseStrategie())
         team4.add("D'Jok",Attaque2Strategie())
         team4.add("Micro-Ice",DefenseStrategie())
         team4.add("Ahito",GardienStrategie())
-
+        return team4
 
  #Strategie qui ne fait rien
