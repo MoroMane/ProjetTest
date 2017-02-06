@@ -6,7 +6,7 @@ Created on Mon Jan 30 19:21:53 2017
 """
 
 from soccersimulator import SoccerTeam
-from OrNoir import Attaque2Strategie,DefenseStrategie
+from OrNoir import Attaque2Strategie,DefenseStrategie,GardienStrategie
 
 def get_team(i):
     if i==1:
