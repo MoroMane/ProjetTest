@@ -5,7 +5,7 @@ Created on Mon Jan 23 18:52:56 2017
 @author: 3520543
 """
 
-import toolboxmodif
+import toolboxmodif1
 
 
 from soccersimulator.strategies  import Strategy
@@ -18,6 +18,21 @@ from soccersimulator import Strategy
 from soccersimulator import settings
 import math
 
+#Stratégie Fonceur
+#class Fonceur(Strategy):
+#    def __init__(self,name="ma strategie"):
+#        Strategy.__init__(self,name)
+#
+#    def compute_strategy(self,state,idteam,idplayer):
+#        #faire qqe chose d intelligent
+#        vb= state.ball.position                             #position du ballon (vecteur 2d)
+#        v1= state.player_state(idteam,idplayer).position    #position du joueur (vecteur 2d)
+#        if (idteam==1):
+#            v2= Vector2D(150,45)
+#        if (idteam==2):
+#            v2= Vector2D(0,45)
+#        return SoccerAction(vb-v1,v2-vb)    
+#        #return SoccerAction(vitesse,shoot)
 
 ## Strategie aleatoire
 class RandomStrategy(Strategy):
@@ -32,8 +47,8 @@ class Attaque2Strategie(Strategy):
     def compute_strategy(self,state,idteam,idplayer):
         #faire qqe chose d intelligent
     
-        mystate = toolboxmodif.MyState(state,idteam,idplayer)
-        myaction= toolboxmodif.MyAction(mystate)
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
         return myaction.action_attaquant()
         #return SoccerAction(vecteur_vitesse,vecteur_shoot)
 
@@ -48,17 +63,34 @@ class DefenseStrategie(Strategy):
     def __init__(self,name="defense"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
-        mystate = toolboxmodif.MyState(state,idteam,idplayer)
-        myaction= toolboxmodif.MyAction(mystate)
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
         return myaction.action_def()
 
+
+class GardienStrategie(Strategy):
+    def __init__(self,name="defense"):
+        Strategy.__init__(self,name)
+    def compute_strategy(self,state,idteam,idplayer):
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.action_gardien()
+
+class MilieuStrategie(Strategy):
+    def __init__(self,name="defense"):
+        Strategy.__init__(self,name)
+    def compute_strategy(self,state,idteam,idplayer):
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.action_milieu()
+        
 team1 = SoccerTeam(name="team1",login="etu1")
 team2 = SoccerTeam(name="team2",login="etu2")
 team1.add("Cavani",Attaque2Strategie())
-#team1.add("Murasakibara",Attaque2Strategie())
+#team1.add("Murasakibara",DefenseStrategie())
  #Strategie qui ne fait rien
-team2.add("Paul",DefenseStrategie())
-#team2.add("Kagami",Attaque2Strategie())   #Strategie aleatoire
+#team2.add("Paul",Attaque2Strategie())
+team2.add("Kagami",DefenseStrategie())   #Strategie aleatoire
 
 #Creation d'une partie
 simu = Simulation(team1,team2)

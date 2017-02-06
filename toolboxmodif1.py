@@ -74,37 +74,70 @@ class MyAction(object):
 #        return getattr(self.state, name)
     
     def aller(self,p):
-        return SoccerAction(p-self.state.my_position(),Vector2D())
+        return SoccerAction((p-self.state.my_position()),Vector2D())
+    
     def aller_vers_balle(self):
         return self.aller(self.state.ball_position())
+    
     def shoot(self,p):
-        return SoccerAction(Vector2D(0,0),0.09*(p-self.state.my_position()))
+        return SoccerAction(Vector2D(0,0),0.1*(p-self.state.my_position()))
+    
     def shoot_but(self):
-        return self.aller_vers_balle() + self.shoot(self.state.position_but_adv())
+    	if (self.state.ball_position()-self.state.my_position()).norm <=settings.PLAYER_RADIUS + settings.BALL_RADIUS:
+        	return self.shoot(self.state.position_but_adv())
+        else :
+        	return self.aller_vers_balle()
+	
+    def pousse_ball(self):
+		if (self.state.ball_position()-self.state.my_position()).norm <= settings.PLAYER_RADIUS + settings.BALL_RADIUS:
+			return SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position())*0.015)
+		else :
+                 return self.aller_vers_balle()
+	
     def dribble_team1(self):
-        return self.aller_vers_balle()+SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position())*0.015)
-    def dribble_team2(self):
-             return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(-1,-0.2))
+        if (self.state.ball_position()-self.state.my_position() <= settings.PLAYER_RADIUS + settings.BALL_RADIUS):
+            return SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position())*0.01)
+        else : 
+             return self.aller_vers_balle()
+#    def dribble_team2(self):
+#             return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(-1,-0.2))
+    
     def action_attaquant(self):
         if self.state.idteam==1:
-            if ((self.state.ball_position()-self.state.my_position() <= Vector2D(settings.PLAYER_RADIUS + settings.BALL_RADIUS,settings.PLAYER_RADIUS + settings.BALL_RADIUS)) and (self.state.ball_positionX()<settings.GAME_WIDTH-40)):
-                return self.dribble_team1()
+            if ((self.state.ball_positionX()<settings.GAME_WIDTH-40)):
+                return self.pousse_ball()
             else : 
                 return self.shoot_but()
         else :
             if self.state.ball_positionX()>settings.GAME_WIDTH-110:
-                return self.dribble_team2()
+                return self.pousse_ball()
             else :
-                return self.shoot_but()
-                
+                return self.shoot_but()            
+
+    def action_gardien(self):
+        if self.state.idteam==1:
+            if self.state.ball_positionX()>settings.GAME_WIDTH-110:        
+                return self.aller(Vector2D(25,45))
+            else:
+                return self.degagement()
+        else:
+            if self.state.ball_positionX()<settings.GAME_WIDTH-40:        
+                return self.aller(Vector2D(125,45))
+            else:
+                return self.degagement()
+      
     
     def degagement(self): #p=position du dégagement
         return self.aller_vers_balle()+self.shoot_but()
         
     def action_def(self):
         if self.state.idteam==1:
-            if self.state.ball_positionX()<75:
+            if self.state.ball_positionX()<80:
                 return self.degagement()
+            else : 
+                 return self.aller(Vector2D(35,45))
         else :
-            if self.state.ball_positionX()>0:
+            if self.state.ball_positionX()>70:
                 return self.degagement()
+            else :
+                return self.aller(Vector2D(115,45))

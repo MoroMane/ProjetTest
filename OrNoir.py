@@ -6,7 +6,7 @@ Created on Mon Jan 30 19:35:31 2017
 """
 
 
-import toolboxmodif
+import toolboxmodif1
 
 from soccersimulator.strategies  import Strategy
 from soccersimulator.mdpsoccer import SoccerTeam, Simulation
@@ -32,8 +32,8 @@ class Attaque2Strategie(Strategy):
     def compute_strategy(self,state,idteam,idplayer):
         #faire qqe chose d intelligent
     
-        mystate = toolboxmodif.MyState(state,idteam,idplayer)
-        myaction= toolboxmodif.MyAction(mystate)
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
         return myaction.action_attaquant()
         #return SoccerAction(vecteur_vitesse,vecteur_shoot)
 
@@ -41,7 +41,14 @@ class DefenseStrategie(Strategy):
     def __init__(self,name="defense"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
-        mystate = toolboxmodif.MyState(state,idteam,idplayer)
-        myaction= toolboxmodif.MyAction(mystate)
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
         return myaction.action_def()
 
+class GardienStrategie(Strategy):
+    def __init__(self,name="defense"):
+        Strategy.__init__(self,name)
+    def compute_strategy(self,state,idteam,idplayer):
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.action_gardien()
