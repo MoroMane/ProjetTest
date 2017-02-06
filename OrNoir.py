@@ -46,9 +46,28 @@ class DefenseStrategie(Strategy):
         return myaction.action_def()
 
 class GardienStrategie(Strategy):
-    def __init__(self,name="defense"):
+    def __init__(self,name="Gardien"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
         mystate = toolboxmodif1.MyState(state,idteam,idplayer)
         myaction= toolboxmodif1.MyAction(mystate)
         return myaction.action_gardien()
+
+class MilieuStrategie(Strategy):
+    def __init__(self,name="Milieu"):
+        Strategy.__init__(self,name)
+    def compute_strategy(self,state,idteam,idplayer):
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.action_milieu()
+        
+        
+class Attaque4Strategie(Strategy):
+    def __init__(self,name="Attaque"):
+        Strategy.__init__(self,name)
+    def compute_strategy(self,state,idteam,idplayer):
+        #faire qqe chose d intelligent
+    
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.action_attaquant4()

@@ -69,7 +69,7 @@ class DefenseStrategie(Strategy):
 
 
 class GardienStrategie(Strategy):
-    def __init__(self,name="defense"):
+    def __init__(self,name="gardien"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
         mystate = toolboxmodif1.MyState(state,idteam,idplayer)
@@ -77,7 +77,7 @@ class GardienStrategie(Strategy):
         return myaction.action_gardien()
 
 class MilieuStrategie(Strategy):
-    def __init__(self,name="defense"):
+    def __init__(self,name="Milieu"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
         mystate = toolboxmodif1.MyState(state,idteam,idplayer)
