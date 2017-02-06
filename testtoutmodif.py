@@ -84,14 +84,25 @@ class MilieuStrategie(Strategy):
         myaction= toolboxmodif1.MyAction(mystate)
         return myaction.action_milieu()
         
+class Attaque4Strategie(Strategy):
+    def __init__(self,name="Attaque"):
+        Strategy.__init__(self,name)
+    def compute_strategy(self,state,idteam,idplayer):
+        #faire qqe chose d intelligent
+    
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.action_attaquant4()
+        
 team1 = SoccerTeam(name="team1",login="etu1")
 team2 = SoccerTeam(name="team2",login="etu2")
-team1.add("Cavani",Attaque2Strategie())
-#team1.add("Murasakibara",DefenseStrategie())
+#team1.add("Cavani",Attaque4Strategie())
+team1.add("Murasakibara",GardienStrategie())
+team1.add("Rocket",DefenseStrategie())
  #Strategie qui ne fait rien
-#team2.add("Paul",Attaque2Strategie())
-team2.add("Kagami",DefenseStrategie())   #Strategie aleatoire
-
+team2.add("Paul",GardienStrategie())
+team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
+team2.add("Landers",Attaque4Strategie())
 #Creation d'une partie
 simu = Simulation(team1,team2)
 #Jouer et afficher la partie

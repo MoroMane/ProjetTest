@@ -94,11 +94,11 @@ class MyAction(object):
 		else :
                  return self.aller_vers_balle()
 	
-    def dribble_team1(self):
-        if (self.state.ball_position()-self.state.my_position() <= settings.PLAYER_RADIUS + settings.BALL_RADIUS):
-            return SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position())*0.01)
-        else : 
-             return self.aller_vers_balle()
+#    def dribble_team1(self):
+#        if (self.state.ball_position()-self.state.my_position() <= settings.PLAYER_RADIUS + settings.BALL_RADIUS):
+#            return SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position())*0.01)
+#        else : 
+#             return self.aller_vers_balle()
 #    def dribble_team2(self):
 #             return self.aller_vers_balle()+SoccerAction(Vector2D(),Vector2D(-1,-0.2))
     
@@ -107,9 +107,15 @@ class MyAction(object):
 
     def passe(self):
         if self.state.idteam == 1:
-            return self.shoot(Vector2D(90,45))
+            if ((self.state.ball_position()-self.state.my_position()).norm <= settings.PLAYER_RADIUS + settings.BALL_RADIUS):
+                return self.shoot(Vector2D(80,45))
+            else :
+                return self.aller_vers_balle()
         else :
-            return self.shoot(Vector2D(60,45))
+            if ((self.state.ball_position()-self.state.my_position()).norm <= settings.PLAYER_RADIUS + settings.BALL_RADIUS):
+                return self.shoot(Vector2D(70,45))
+            else :
+                return self.aller_vers_balle()
 
     def action_attaquant(self):
         if self.state.idteam==1:
@@ -151,20 +157,24 @@ class MyAction(object):
             if self.state.ball_positionX()<85:
                 return self.passe()
             else : 
-                 return self.aller(Vector2D(35,45))
+                 return self.aller(Vector2D(45,45))
         else :
             if self.state.ball_positionX()>65:
                 return self.passe()
             else :
-                return self.aller(Vector2D(115,45))
+                return self.aller(Vector2D(105,45))
     def action_attaquant4(self):
         if self.state.idteam==1:
-            if ((self.state.ball_positionX()<settings.GAME_WIDTH-40)):
+            if ((self.state.ball_positionX()<80)):
+                return self.aller(Vector2D(80,45))
+            elif self.state.ball_positionX()<110 :
                 return self.pousse_ball()
             else : 
                 return self.shoot_but()
         else :
-            if self.state.ball_positionX()>settings.GAME_WIDTH-110:
+            if ((self.state.ball_positionX()>70)):
+                return self.aller(Vector2D(70,45))
+            elif self.state.ball_positionX()>40 :
                 return self.pousse_ball()
-            else :
-                return self.shoot_but()            
+            else : 
+                return self.shoot_but()

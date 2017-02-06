@@ -6,7 +6,7 @@ Created on Mon Jan 30 19:21:53 2017
 """
 
 from soccersimulator import SoccerTeam
-from OrNoir import Attaque2Strategie,DefenseStrategie,GardienStrategie
+from OrNoir import Attaque2Strategie,DefenseStrategie,GardienStrategie,MilieuStrategie,Attaque4Strategie
 
 def get_team(i):
     if i==1:
@@ -21,8 +21,8 @@ def get_team(i):
     else : 
         team4 = SoccerTeam(name="Snow Kids",login="etu4")
         team4.add("Thran",DefenseStrategie())
-        team4.add("D'Jok",Attaque2Strategie())
-        team4.add("Micro-Ice",DefenseStrategie())
+        team4.add("D'Jok",Attaque4Strategie())
+        team4.add("Rocket",MilieuStrategie())
         team4.add("Ahito",GardienStrategie())
         return team4
 
