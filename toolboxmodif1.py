@@ -150,7 +150,7 @@ class MyAction(object):
                 if self.state.ball_positionY()>30 and self.state.ball_positionY()<60:                    
                     return self.aller(Vector2D(15,self.state.ball_position_future().y))
                 else :
-                    return self.aller(Vector2D(135,45))
+                    return self.aller(Vector2D(15,45))
                 #return self.aller(Vector2D(25,45))
             else:
                 return self.degagement()
