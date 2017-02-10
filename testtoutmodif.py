@@ -19,20 +19,20 @@ from soccersimulator import settings
 import math
 
 #Stratégie Fonceur
-#class Fonceur(Strategy):
-#    def __init__(self,name="ma strategie"):
-#        Strategy.__init__(self,name)
-#
-#    def compute_strategy(self,state,idteam,idplayer):
-#        #faire qqe chose d intelligent
-#        vb= state.ball.position                             #position du ballon (vecteur 2d)
-#        v1= state.player_state(idteam,idplayer).position    #position du joueur (vecteur 2d)
-#        if (idteam==1):
-#            v2= Vector2D(150,45)
-#        if (idteam==2):
-#            v2= Vector2D(0,45)
-#        return SoccerAction(vb-v1,v2-vb)    
-#        #return SoccerAction(vitesse,shoot)
+class Fonceur(Strategy):
+    def __init__(self,name="ma strategie"):
+        Strategy.__init__(self,name)
+
+    def compute_strategy(self,state,idteam,idplayer):
+        #faire qqe chose d intelligent
+        vb= state.ball.position                             #position du ballon (vecteur 2d)
+        v1= state.player_state(idteam,idplayer).position    #position du joueur (vecteur 2d)
+        if (idteam==1):
+            v2= Vector2D(150,45)
+        if (idteam==2):
+            v2= Vector2D(0,45)
+        return SoccerAction(vb-v1,v2-vb)    
+        #return SoccerAction(vitesse,shoot)
 
 ## Strategie aleatoire
 class RandomStrategy(Strategy):
@@ -96,13 +96,20 @@ class Attaque4Strategie(Strategy):
         
 team1 = SoccerTeam(name="team1",login="etu1")
 team2 = SoccerTeam(name="team2",login="etu2")
-#team1.add("Cavani",Attaque4Strategie())
+
 team1.add("Murasakibara",GardienStrategie())
-team1.add("Rocket",DefenseStrategie())
+team1.add("Thran",DefenseStrategie())
+#team1.add("pastore",MilieuStrategie())
+#team1.add("Cavani",Attaque2Strategie())
+#team1.add("D'Jok",Attaque4Strategie())
+#team1.add("Fonceur",Fonceur())
  #Strategie qui ne fait rien
 team2.add("Paul",GardienStrategie())
+team2.add("Rocket",DefenseStrategie())
 team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
+#team2.add("Landers",Attaque2Strategie())
 team2.add("Landers",Attaque4Strategie())
+#team2.add("Landers",Fonceur())
 #Creation d'une partie
 simu = Simulation(team1,team2)
 #Jouer et afficher la partie
