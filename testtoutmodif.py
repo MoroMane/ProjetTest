@@ -96,20 +96,20 @@ class Attaque4Strategie(Strategy):
         
 team1 = SoccerTeam(name="team1",login="etu1")
 team2 = SoccerTeam(name="team2",login="etu2")
-
+#
 team1.add("Murasakibara",GardienStrategie())
-team1.add("Thran",DefenseStrategie())
+#team1.add("Thran",DefenseStrategie())
 #team1.add("pastore",MilieuStrategie())
 #team1.add("Cavani",Attaque2Strategie())
 #team1.add("D'Jok",Attaque4Strategie())
 #team1.add("Fonceur",Fonceur())
- #Strategie qui ne fait rien
-team2.add("Paul",GardienStrategie())
-team2.add("Rocket",DefenseStrategie())
-team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
+# #Strategie qui ne fait rien
+#team2.add("Paul",GardienStrategie())
+#team2.add("Rocket",DefenseStrategie())
+#team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
 #team2.add("Landers",Attaque2Strategie())
-team2.add("Landers",Attaque4Strategie())
-#team2.add("Landers",Fonceur())
+#team2.add("Landers",Attaque4Strategie())
+team2.add("Landers",Fonceur())
 #Creation d'une partie
 simu = Simulation(team1,team2)
 #Jouer et afficher la partie
