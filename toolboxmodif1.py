@@ -46,7 +46,14 @@ class MyState(object):
             return Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
         else :
             return Vector2D(0,settings.GAME_HEIGHT/2.)
+    def position_mon_but(self):
+        if self.domicile():
+            return Vector2D(0,settings.GAME_HEIGHT/2.)
+        else :
+            return Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
         
+    
+    
     def ball_position_future(self):
         if self.ball_vitesse().norm > 2 or self.ball_vitesse().norm < -2:
             return self.ball_position()+self.ball_vitesse()*10
@@ -57,10 +64,35 @@ class MyState(object):
         return self.state.player_state(self.key[0],(1+self.key[1])%2).position
         
     def vector_placement_gardien(self):
-        if self.domicile():
-            return  Vector2D(10,45)
-        else :
-            return Vector2D(140,45)
+        return Vector2D(self.get_dir_jeu().x*10,0)+self.position_mon_but()
+    
+    def distance_balle (self): 
+        return (self.my_position()-self.ball_position()).norm()
+    
+    def distance_balle_adv_proche(self):
+#        return (self.position_adv_proche(1)-self.ball_position()).norm()
+        idproche=self.idplayer
+        for (idt, idp) in self.state.players:
+            if idt!=self.idteam :
+                if (self.state.player_state(idt,idp).position-self.ball_position()).norm < (self.state.player_state(idt,idproche).position-self.ball_position()).norm:
+                    idproche=idp
+        return (self.state.player_state(idt,idproche).position-self.ball_position()).norm
+                
+#        [idp for (idt, idp) in self.state.players if idt!=self.idteam]
+            
+#    def position_adv_proche(self,i):
+#        if i== 1:
+#            return self.state.player_state((self.key[0]+1)%2,self.key[1]).position
+#        else :
+#            ind = 0            
+#            for i in range (self.key[1]):
+#                if ():
+        
+    def adv_plus_proche_ball(self):
+        return (self.distance_balle() > self.distance_balle_adv_proche())
+        
+    def get_dir_jeu(self):
+        return  (self.position_but_adv()-self.position_mon_but()).normalize()
         
 
 #===================================================================================================================================
@@ -107,7 +139,7 @@ class MyState(object):
             return self.ball_positionX()<=settings.GAME_WIDTH-110
         else :
             return self.ball_positionX()>=settings.GAME_WIDTH-40
-
+#==================================================================================================================================
 class MyAction(object):
     def __init__(self,state):
         self.state = state
@@ -145,26 +177,24 @@ class MyAction(object):
 #            Replacement 
 
     def replacement_gardien_devant_but(self):
-        if self.state.domicile():
-            return  self.aller(Vector2D(10,45))
-        else :
-            return self.aller(Vector2D(140,45))
+        #print(self.state.get_dir_jeu().x*10)
+        return  self.aller(self.state.vector_placement_gardien())
+        
     def placement_gardien_entre_poteaux(self):
         return self.aller(Vector2D(self.state.vector_placement_gardien().x,self.state.ball_position().y))
 
     def replacement_def(self):
-        if self.state.domicile():
-            return  self.aller(Vector2D(30,self.state.ball_position().y))
-        else :
-            return self.aller(Vector2D(120,45))
-
+        return  self.aller(Vector2D(self.state.get_dir_jeu().x*30+self.state.position_mon_but().x,self.state.ball_position().y))
+        
     def replacement_milieu(self):
+        return self.aller(Vector2D(self.state.get_dir_jeu().x*45+self.state.position_mon_but().x,45))
         if self.state.domicile():
             return  self.aller(Vector2D(45,45))
         else :
             return self.aller(Vector2D(105,45))
 
     def replacement_attaquant4(self):
+        return self.aller(Vector2D(self.state.get_dir_jeu().x*80+self.state.position_mon_but().x,45))
         if self.state.domicile():
             return  self.aller(Vector2D(80,45))
         else :
@@ -180,7 +210,7 @@ class MyAction(object):
             if self.state.carre_central():
                 return self.pousse_ball_centre()   
             elif not (self.state.frappe_position()):
-                    return self.pousse_ball()
+                return self.pousse_ball()
             else :
                 return self.shoot_but()
                               

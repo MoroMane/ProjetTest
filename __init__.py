@@ -16,7 +16,7 @@ def get_team(i):
     elif i==2:
         team2 = SoccerTeam(name="team2",login="etu2")
         team2.add("Micro-Ice",DefenseStrategie())
-        team2.add("D-Joke",Attaque2Strategie())
+        team2.add("D-Joke",Attaque4Strategie())
         return team2
     else : 
         team4 = SoccerTeam(name="Snow Kids",login="etu4")
