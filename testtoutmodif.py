@@ -106,12 +106,12 @@ team1.add("D'Jok",Attaque4Strategie())
 #team1.add("Fonceur",Fonceur())
 # #Strategie qui ne fait rien
 team2.add("Paul",GardienStrategie())
-team2.add("Rocket",DefenseStrategie())
+#team2.add("Rocket",DefenseStrategie())
 #team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
 #team2.add("Landers",Attaque2Strategie())
 #team2.add("Landers",Attaque4Strategie())
 #team2.add("Landers",Fonceur())
-team2.add("Landers",RandomStrategy())
+#team2.add("Landers",RandomStrategy())
 #Creation d'une partie
 simu = Simulation(team1,team2)
 #Jouer et afficher la partie

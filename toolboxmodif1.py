@@ -156,7 +156,7 @@ class MyAction(object):
         return self.aller(self.state.ball_position()+self.state.ball_vitesse()*5)
     
     def shoot(self,p):
-        return SoccerAction(Vector2D(),0.1*(p-self.state.my_position()))
+        return SoccerAction(Vector2D(),0.095*(p-self.state.my_position()))
     
     def shoot_but(self):
         return self.shoot(self.state.position_but_adv())
