@@ -14,7 +14,7 @@ def get_team(i):
         team1.add("Landers",Attaque2Strategie())
         return team1
     elif i==2:
-        team2 = SoccerTeam(name="team2",login="etu2")
+        team2 = SoccerTeam(name="Réserve",login="etu2")
         team2.add("Micro-Ice",DefenseStrategie())
         team2.add("D-Joke",Attaque4Strategie())
         return team2

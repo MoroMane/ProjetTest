@@ -61,7 +61,8 @@ class MyState(object):
             return self.ball_position()
 
     def position_coop_2v2(self):
-        return self.state.player_state(self.key[0],(1+self.key[1])%2).position
+        nb_coop=len([idp for (idt, idp) in self.state.players if idt == self.idteam])
+        return self.state.player_state(self.key[0],(1+self.key[1])%(nb_coop)).position
         
     def vector_placement_gardien(self):
         return Vector2D(self.get_dir_jeu().x*10,0)+self.position_mon_but()
@@ -107,38 +108,40 @@ class MyState(object):
         return ((self.ball_positionX()>74 and self.ball_positionX()<76) and (self.ball_positionY()<46 and self.ball_positionY()>44))
 
     def def_position_action(self):
-        if self.domicile():
-            return self.ball_positionX()<75
-        else :
-            return self.ball_positionX()>75
+
+        return abs((self.ball_position()-self.position_mon_but()).x) < (Vector2D(self.get_dir_jeu().x*75,0)+self.position_mon_but()).x
+
     
     def attaquant4_position_dribble(self):
-        if self.domicile():
-            return self.ball_positionX()>=75
-        else :
-            return self.ball_positionX()<=75
+        return abs((self.ball_position()-self.position_mon_but()).x)>=75
+#        if self.domicile():
+#            return self.ball_positionX()>=75
+#        else :
+#            return self.ball_positionX()<=75
         
     def frappe_position(self):
-        if self.domicile():
-            return (self.ball_positionX()>settings.GAME_WIDTH-40)
-        else :
-            return (self.ball_positionX()<settings.GAME_WIDTH-110)
+        return abs((self.ball_position()-self.position_but_adv()).x)<=40
+#        if self.domicile():
+#            return (self.ball_positionX()>settings.GAME_WIDTH-40)
+#        else :
+#            return (self.ball_positionX()<settings.GAME_WIDTH-110)
             
     def milieu_position_action(self):
-        if self.domicile():
-            return self.ball_positionX()<80
-        else :
-            return self.ball_positionX()>70
+        return abs((self.ball_position()-self.position_mon_but()).x)<80
+#        if self.domicile():
+#            return self.ball_positionX()<80
+#        else :
+#            return self.ball_positionX()>70
 
     def balle_dans_encadrement_but(self):
-        
         return (self.ball_positionY()>40 and self.ball_positionY()<50) 
 
     def zone_action_gardien(self):
-        if self.domicile():
-            return self.ball_positionX()<=settings.GAME_WIDTH-110
-        else :
-            return self.ball_positionX()>=settings.GAME_WIDTH-40
+        return abs((self.ball_position()-self.position_mon_but()).x)<=40
+#        if self.domicile():
+#            return self.ball_positionX()<=settings.GAME_WIDTH-110
+#        else :
+#            return self.ball_positionX()>=settings.GAME_WIDTH-40
 #==================================================================================================================================
 class MyAction(object):
     def __init__(self,state):
@@ -188,17 +191,17 @@ class MyAction(object):
         
     def replacement_milieu(self):
         return self.aller(Vector2D(self.state.get_dir_jeu().x*45+self.state.position_mon_but().x,45))
-        if self.state.domicile():
-            return  self.aller(Vector2D(45,45))
-        else :
-            return self.aller(Vector2D(105,45))
+#        if self.state.domicile():
+#            return  self.aller(Vector2D(45,45))
+#        else :
+#            return self.aller(Vector2D(105,45))
 
     def replacement_attaquant4(self):
         return self.aller(Vector2D(self.state.get_dir_jeu().x*80+self.state.position_mon_but().x,45))
-        if self.state.domicile():
-            return  self.aller(Vector2D(80,45))
-        else :
-            return self.aller(Vector2D(70,45))
+#        if self.state.domicile():
+#            return  self.aller(Vector2D(80,45))
+#        else :
+#            return self.aller(Vector2D(70,45))
 	
 #====================================================================================================================================
 #                 Action Joueur    
