@@ -78,16 +78,6 @@ class MyState(object):
                 if (self.state.player_state(idt,idp).position-self.ball_position()).norm < (self.state.player_state(idt,idproche).position-self.ball_position()).norm:
                     idproche=idp
         return (self.state.player_state(idt,idproche).position-self.ball_position()).norm
-                
-#        [idp for (idt, idp) in self.state.players if idt!=self.idteam]
-            
-#    def position_adv_proche(self,i):
-#        if i== 1:
-#            return self.state.player_state((self.key[0]+1)%2,self.key[1]).position
-#        else :
-#            ind = 0            
-#            for i in range (self.key[1]):
-#                if ():
         
     def adv_plus_proche_ball(self):
         return (self.distance_balle() > self.distance_balle_adv_proche())
@@ -114,40 +104,22 @@ class MyState(object):
     
     def attaquant4_position_dribble(self):
         return abs((self.ball_position()-self.position_mon_but()).x)>=75
-#        if self.domicile():
-#            return self.ball_positionX()>=75
-#        else :
-#            return self.ball_positionX()<=75
         
     def frappe_position(self):
-        return abs((self.ball_position()-self.position_but_adv()).x)<=40
-#        if self.domicile():
-#            return (self.ball_positionX()>settings.GAME_WIDTH-40)
-#        else :
-#            return (self.ball_positionX()<settings.GAME_WIDTH-110)
+        return abs((self.ball_position()-self.position_but_adv()).x)<=45
             
     def milieu_position_action(self):
-        return abs((self.ball_position()-self.position_mon_but()).x)<80
-#        if self.domicile():
-#            return self.ball_positionX()<80
-#        else :
-#            return self.ball_positionX()>70
+        return (abs((self.ball_position()-self.position_mon_but()).x)<80) and (abs((self.ball_position()-self.position_mon_but()).x)>25) 
 
     def balle_dans_encadrement_but(self):
         return (self.ball_positionY()>40 and self.ball_positionY()<50) 
 
     def zone_action_gardien(self):
         return abs((self.ball_position()-self.position_mon_but()).x)<=40
-#        if self.domicile():
-#            return self.ball_positionX()<=settings.GAME_WIDTH-110
-#        else :
-#            return self.ball_positionX()>=settings.GAME_WIDTH-40
 #==================================================================================================================================
 class MyAction(object):
     def __init__(self,state):
         self.state = state
-#    def __getattr__(self, name):
-#        return getattr(self.state, name)
     
     def aller(self,p):
         return SoccerAction((p-self.state.my_position()),Vector2D())
@@ -156,13 +128,13 @@ class MyAction(object):
         return self.aller(self.state.ball_position()+self.state.ball_vitesse()*5)
     
     def shoot(self,p):
-        return SoccerAction(Vector2D(),0.095*(p-self.state.my_position()))
+        return SoccerAction(Vector2D(),0.1*(p-self.state.my_position()))
     
     def shoot_but(self):
         return self.shoot(self.state.position_but_adv())
 
     def pousse_ball(self):
-        return SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position_future())*0.02) # 0.02 constante pour le dribble
+        return SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position_future())*0.03) # 0.02 constante pour le dribble
 
     def pousse_ball_centre(self):
         if self.state.domicile():
@@ -180,7 +152,6 @@ class MyAction(object):
 #            Replacement 
 
     def replacement_gardien_devant_but(self):
-        #print(self.state.get_dir_jeu().x*10)
         return  self.aller(self.state.vector_placement_gardien())
         
     def placement_gardien_entre_poteaux(self):
@@ -191,18 +162,9 @@ class MyAction(object):
         
     def replacement_milieu(self):
         return self.aller(Vector2D(self.state.get_dir_jeu().x*45+self.state.position_mon_but().x,45))
-#        if self.state.domicile():
-#            return  self.aller(Vector2D(45,45))
-#        else :
-#            return self.aller(Vector2D(105,45))
 
     def replacement_attaquant4(self):
         return self.aller(Vector2D(self.state.get_dir_jeu().x*80+self.state.position_mon_but().x,45))
-#        if self.state.domicile():
-#            return  self.aller(Vector2D(80,45))
-#        else :
-#            return self.aller(Vector2D(70,45))
-	
 #====================================================================================================================================
 #                 Action Joueur    
  

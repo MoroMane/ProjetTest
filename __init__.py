@@ -22,9 +22,8 @@ def get_team(i):
         team4 = SoccerTeam(name="Snow Kids",login="etu4")
         team4.add("Ahito",GardienStrategie())        
         team4.add("Thran",DefenseStrategie())
+        team4.add("Rocket",MilieuStrategie())        
         team4.add("D'Jok",Attaque4Strategie())
-        team4.add("Rocket",MilieuStrategie())
-        
         return team4
 
  #Strategie qui ne fait rien

@@ -42,6 +42,15 @@ class RandomStrategy(Strategy):
     def compute_strategy(self,state,id_team,id_player):
         return SoccerAction(Vector2D.create_random(-1,1),Vector2D.create_random(-1,1))
 
+class FrappeStrategy(Strategy):
+    def __init__(self):
+        Strategy.__init__(self,"Frappe")
+    def compute_strategy(self,state,idteam,idplayer):
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.aller_vers_balle()+myaction.shoot_but()
+
+
 class Attaque2Strategie(Strategy):
     def __init__(self,name="Attaque"):
         Strategy.__init__(self,name)
@@ -97,22 +106,22 @@ class Attaque4Strategie(Strategy):
         
 team1 = SoccerTeam(name="team1",login="etu1")
 team2 = SoccerTeam(name="team2",login="etu2")
-#
+##
 #team1.add("Murasakibara",GardienStrategie())
-team1.add("Thran",DefenseStrategie())
-team1.add("pastore",MilieuStrategie())
-#team1.add("Cavani",Attaque2Strategie())
-team1.add("D'Jok",Attaque4Strategie())
-#team1.add("Fonceur",Fonceur())
-# #Strategie qui ne fait rien
-team2.add("Paul",GardienStrategie())
+#team1.add("Thran",DefenseStrategie())
+#team1.add("pastore",MilieuStrategie())
+##team1.add("Cavani",Attaque2Strategie())
+#team1.add("D'Jok",Attaque4Strategie())
+###team1.add("Fonceur",Fonceur())
+### #Strategie qui ne fait rien
+#team2.add("Paul",GardienStrategie())
 #team2.add("Rocket",DefenseStrategie())
-#team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
-#team2.add("Landers",Attaque2Strategie())
+###team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
 #team2.add("Landers",Attaque4Strategie())
-#team2.add("Landers",Fonceur())
-#team2.add("Landers",RandomStrategy())
-#Creation d'une partie
-simu = Simulation(team1,team2)
-#Jouer et afficher la partie
-show_simu(simu)
+#team2.add("Landers",Attaque2Strategie())
+##team2.add("Landers",Fonceur())
+###team2.add("Landers",RandomStrategy())
+###Creation d'une partie
+#simu = Simulation(team1,team2)
+###Jouer et afficher la partie
+#show_simu(simu)
