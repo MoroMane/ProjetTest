@@ -98,7 +98,7 @@ class MyState(object):
         return ((self.ball_positionX()>74 and self.ball_positionX()<76) and (self.ball_positionY()<46 and self.ball_positionY()>44))
 
     def def_position_action_2v2(self):
-        return abs((self.ball_position()-self.position_mon_but()).x) < 75
+        return abs((self.ball_position()-self.position_mon_but()).x) < 70
 
     def def_position_action_4v4(self):
         return abs((self.ball_position()-self.position_mon_but()).x) < 60
@@ -166,7 +166,7 @@ class MyAction(object):
         return  self.aller(Vector2D(self.state.get_dir_jeu().x*30+self.state.position_mon_but().x,self.state.ball_position().y))
         
     def replacement_def_2v2(self):
-        return  self.aller(Vector2D(self.state.get_dir_jeu().x*60+self.state.position_mon_but().x,self.state.ball_position().y))
+        return  self.aller(Vector2D(self.state.get_dir_jeu().x*50+self.state.position_mon_but().x,self.state.ball_position().y))
     
     def replacement_milieu(self):
         return self.aller(Vector2D(self.state.get_dir_jeu().x*45+self.state.position_mon_but().x,45))
