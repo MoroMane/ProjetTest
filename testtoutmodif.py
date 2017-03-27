@@ -32,7 +32,10 @@ class Fonceur(Strategy):
             v2= Vector2D(150,45)
         if (idteam==2):
             v2= Vector2D(0,45)
-        return SoccerAction(vb-v1,v2-vb)    
+        if (vb-v1).norm <= settings.PLAYER_RADIUS + settings.BALL_RADIUS:
+            return SoccerAction(Vector2D(),v2-vb)
+        else :
+            return SoccerAction((vb-v1)+state.ball.vitesse,Vector2D())
         #return SoccerAction(vitesse,shoot)
 
 ## Strategie aleatoire
@@ -69,13 +72,21 @@ class Attaque2Strategie(Strategy):
 #        
 #        if state.ball.position.x>75:
 #            return SoccerAction(state.ball.position - state.player_state(idteam,idplayer).position,Vector2D(-50,-50))
-class DefenseStrategie(Strategy):
+class DefenseStrategie_2v2(Strategy):
     def __init__(self,name="defense"):
         Strategy.__init__(self,name)
     def compute_strategy(self,state,idteam,idplayer):
         mystate = toolboxmodif1.MyState(state,idteam,idplayer)
         myaction= toolboxmodif1.MyAction(mystate)
-        return myaction.action_def()
+        return myaction.action_def_2v2()
+
+class DefenseStrategie_4v4(Strategy):
+    def __init__(self,name="defense"):
+        Strategy.__init__(self,name)
+    def compute_strategy(self,state,idteam,idplayer):
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.action_def_4v4()
 
 
 class GardienStrategie(Strategy):
@@ -107,21 +118,23 @@ class Attaque4Strategie(Strategy):
 team1 = SoccerTeam(name="team1",login="etu1")
 team2 = SoccerTeam(name="team2",login="etu2")
 ##
-#team1.add("Murasakibara",GardienStrategie())
-#team1.add("Thran",DefenseStrategie())
+team1.add("Murasakibara",GardienStrategie())
+#team1.add("Thran",DefenseStrategie_2v2())
+team1.add("Thran",DefenseStrategie_4v4())
 #team1.add("pastore",MilieuStrategie())
-##team1.add("Cavani",Attaque2Strategie())
+#team1.add("Cavani",Attaque2Strategie())
 #team1.add("D'Jok",Attaque4Strategie())
-###team1.add("Fonceur",Fonceur())
+team1.add("Fonceur",Fonceur())
 ### #Strategie qui ne fait rien
-#team2.add("Paul",GardienStrategie())
-#team2.add("Rocket",DefenseStrategie())
-###team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
-#team2.add("Landers",Attaque4Strategie())
+team2.add("Paul",GardienStrategie())
+#team2.add("Rocket",DefenseStrategie_2v2())
+#team2.add("Rocket",DefenseStrategie_4v4())
+team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
+team2.add("Landers",Attaque4Strategie())
 #team2.add("Landers",Attaque2Strategie())
-##team2.add("Landers",Fonceur())
+team2.add("Landers",Fonceur())
 ###team2.add("Landers",RandomStrategy())
 ###Creation d'une partie
-#simu = Simulation(team1,team2)
+simu = Simulation(team1,team2)
 ###Jouer et afficher la partie
-#show_simu(simu)
+show_simu(simu)

@@ -1,17 +1,17 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
 edge [fontname=helvetica] ;
-0 [label="X[1] <= 124.3795\ngini = 0.4444\nsamples = 15\nvalue = [5, 10]\nclass = Replacement defensif", fillcolor="#399de57f"] ;
-1 [label="X[1] <= 119.78\ngini = 0.4938\nsamples = 9\nvalue = [5, 4]\nclass = Passe", fillcolor="#e5813933"] ;
+0 [label="X[0] <= 1.8238\ngini = 0.4992\nsamples = 25\nvalue = [13, 12]\nclass = Dribble", fillcolor="#e5813914"] ;
+1 [label="gini = 0.0\nsamples = 10\nvalue = [0, 10]\nclass = Frappe", fillcolor="#399de5ff"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
-2 [label="X[1] <= 119.2916\ngini = 0.32\nsamples = 5\nvalue = [1, 4]\nclass = Replacement defensif", fillcolor="#399de5bf"] ;
-1 -> 2 ;
-3 [label="gini = 0.0\nsamples = 3\nvalue = [0, 3]\nclass = Replacement defensif", fillcolor="#399de5ff"] ;
+2 [label="X[0] <= 15.5141\ngini = 0.2311\nsamples = 15\nvalue = [13, 2]\nclass = Dribble", fillcolor="#e58139d8"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="X[1] <= 81.6061\ngini = 0.48\nsamples = 5\nvalue = [3, 2]\nclass = Dribble", fillcolor="#e5813955"] ;
 2 -> 3 ;
-4 [label="gini = 0.5\nsamples = 2\nvalue = [1, 1]\nclass = Passe", fillcolor="#e5813900"] ;
-2 -> 4 ;
-5 [label="gini = 0.0\nsamples = 4\nvalue = [4, 0]\nclass = Passe", fillcolor="#e58139ff"] ;
-1 -> 5 ;
-6 [label="gini = 0.0\nsamples = 6\nvalue = [0, 6]\nclass = Replacement defensif", fillcolor="#399de5ff"] ;
-0 -> 6 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+4 [label="gini = 0.0\nsamples = 2\nvalue = [2, 0]\nclass = Dribble", fillcolor="#e58139ff"] ;
+3 -> 4 ;
+5 [label="gini = 0.4444\nsamples = 3\nvalue = [1, 2]\nclass = Frappe", fillcolor="#399de57f"] ;
+3 -> 5 ;
+6 [label="gini = 0.0\nsamples = 10\nvalue = [10, 0]\nclass = Dribble", fillcolor="#e58139ff"] ;
+2 -> 6 ;
 }

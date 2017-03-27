@@ -97,13 +97,15 @@ class MyState(object):
     def carre_central(self):
         return ((self.ball_positionX()>74 and self.ball_positionX()<76) and (self.ball_positionY()<46 and self.ball_positionY()>44))
 
-    def def_position_action(self):
+    def def_position_action_2v2(self):
+        return abs((self.ball_position()-self.position_mon_but()).x) < 75
 
-        return abs((self.ball_position()-self.position_mon_but()).x) < (Vector2D(self.get_dir_jeu().x*75,0)+self.position_mon_but()).x
+    def def_position_action_4v4(self):
+        return abs((self.ball_position()-self.position_mon_but()).x) < 60
 
     
     def attaquant4_position_dribble(self):
-        return abs((self.ball_position()-self.position_mon_but()).x)>=75
+        return abs((self.ball_position()-self.position_mon_but()).x)>70
         
     def frappe_position(self):
         return abs((self.ball_position()-self.position_but_adv()).x)<=45
@@ -125,7 +127,7 @@ class MyAction(object):
         return SoccerAction((p-self.state.my_position()),Vector2D())
     
     def aller_vers_balle(self):
-        return self.aller(self.state.ball_position()+self.state.ball_vitesse()*5)
+        return self.aller(self.state.ball_position()+self.state.ball_vitesse())
     
     def shoot(self,p):
         return SoccerAction(Vector2D(),0.1*(p-self.state.my_position()))
@@ -133,12 +135,15 @@ class MyAction(object):
     def shoot_but(self):
         return self.shoot(self.state.position_but_adv())
 
+    def pousse_ball_1v1(self):
+        return SoccerAction(Vector2D(),Vector2D(self.state.get_dir_jeu().x,0))
+        
     def pousse_ball(self):
-        return SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position_future())*0.03) # 0.02 constante pour le dribble
+        return SoccerAction(Vector2D(),(self.state.position_but_adv() - self.state.ball_position_future())*0.015) # 0.02 constante pour le dribble
 
     def pousse_ball_centre(self):
         if self.state.domicile():
-            return SoccerAction(Vector2D(),(Vector2D(1,2)))
+            return SoccerAction(Vector2D(),(Vector2D(0.5,3)))
         else :
             return SoccerAction(Vector2D(),(Vector2D(-1,-2)))
     
@@ -157,14 +162,17 @@ class MyAction(object):
     def placement_gardien_entre_poteaux(self):
         return self.aller(Vector2D(self.state.vector_placement_gardien().x,self.state.ball_position().y))
 
-    def replacement_def(self):
+    def replacement_def_4v4(self):
         return  self.aller(Vector2D(self.state.get_dir_jeu().x*30+self.state.position_mon_but().x,self.state.ball_position().y))
         
+    def replacement_def_2v2(self):
+        return  self.aller(Vector2D(self.state.get_dir_jeu().x*60+self.state.position_mon_but().x,self.state.ball_position().y))
+    
     def replacement_milieu(self):
         return self.aller(Vector2D(self.state.get_dir_jeu().x*45+self.state.position_mon_but().x,45))
 
     def replacement_attaquant4(self):
-        return self.aller(Vector2D(self.state.get_dir_jeu().x*80+self.state.position_mon_but().x,45))
+        return self.aller(Vector2D(self.state.get_dir_jeu().x*80+self.state.position_mon_but().x,self.state.ball_position().y))
 #====================================================================================================================================
 #                 Action Joueur    
  
@@ -172,21 +180,30 @@ class MyAction(object):
         if not (self.state.peut_frapper()):
             return self.aller_vers_balle()
         else :
-            if self.state.carre_central():
-                return self.pousse_ball_centre()   
-            elif not (self.state.frappe_position()):
+#            if self.state.carre_central():
+#                return self.pousse_ball_centre()   
+            if not (self.state.frappe_position()):
                 return self.pousse_ball()
             else :
                 return self.shoot_but()
                               
-    def action_def(self):
-        if self.state.def_position_action():
+    def action_def_4v4(self):
+        if self.state.def_position_action_4v4():
             if not self.state.peut_frapper():
                 return self.aller_vers_balle()
             else:
                 return self.passe_2v2()
         else :
-            return self.replacement_def()
+            return self.replacement_def_4v4()
+            
+    def action_def_2v2(self):
+        if self.state.def_position_action_2v2():
+            if not self.state.peut_frapper():
+                return self.aller_vers_balle()
+            else:
+                return self.passe_2v2()
+        else :
+            return self.replacement_def_2v2()
 
     def action_milieu(self):
          if self.state.milieu_position_action():
