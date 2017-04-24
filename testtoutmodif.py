@@ -129,20 +129,20 @@ team2 = SoccerTeam(name="team2",login="etu2")
 
 team1.add("Murasakibara",GardienStrategie())
 #team1.add("Thran",DefenseStrategie_2v2())
-team1.add("Thran",DefenseStrategie_4v4())
-team1.add("pastore",MilieuStrategie())
+#team1.add("Thran",DefenseStrategie_4v4())
+#team1.add("pastore",MilieuStrategie())
 #team1.add("Cavani",Attaque2Strategie())
-team1.add("D'Jok",Attaque4Strategie())
-#team1.add("Fonceur",Fonceur())
+#team1.add("D'Jok",Attaque4Strategie())
+team1.add("Fonceur",Fonceur())
 #team1.add("Fonceur2",Fonceur2())
 ### #Strategie qui ne fait rien
 team2.add("Paul",GardienStrategie())
-#team2.add("Rocket",DefenseStrategie_4v4())
+team2.add("Rocket",DefenseStrategie_4v4())
 #team2.add("Rocket",DefenseStrategie_2v2())
-#team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
-#team2.add("Landers",Attaque4Strategie())
+team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
+team2.add("Landers",Attaque4Strategie())
 #team2.add("Landers",Attaque2Strategie())
-team2.add("Landers",Fonceur())
+#team2.add("Landers",Fonceur())
 #team2.add("Foceur2",Fonceur2())
 ###team2.add("Landers",RandomStrategy())
 ###Creation d'une partie
