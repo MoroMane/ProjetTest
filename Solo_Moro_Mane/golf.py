@@ -40,11 +40,13 @@ class Golfeur1(Strategy):
         if not mystate.peut_frapper():
             return myaction.aller_vers_balle()
         elif len(zones)==0:
-            print('-------------------------------------------------------------------------------------')
             return SoccerAction(Vector2D(),0.08*(mystate.position_but_adv()-mystate.my_position()))
-            
         else:
-            zone=zones[0]
+            cpt=0
+            for i in range (1,len(zones)):
+                if state.player_state(idteam,idplayer).position.distance(zones[cpt].position+zones[cpt].l/2.)>state.player_state(idteam,idplayer).position.distance(zones[i].position+zones[i].l/2.):
+                    cpt=i
+            zone=zones[cpt]
             if zone.dedans(state.ball.position):
                 return myaction.aller_vers_balle()
             return SoccerAction(Vector2D(),0.08*((zone.position+zone.l/2.)-mystate.my_position()))
@@ -56,28 +58,31 @@ class Golfeur2(Strategy):
         mystate = toolboxmodif1.MyState(state,idteam,idplayer)
         myaction= toolboxmodif1.MyAction(mystate)
         zones=state.get_zones(idteam)
-        zone=zones[0]
         if not mystate.peut_frapper():
             return myaction.aller_vers_balle()
         elif len(zones)==0:
             return SoccerAction(Vector2D(),0.08*(mystate.position_but_adv()-mystate.my_position()))
-            
         else:
-            if zone.dedans(state.ball.position):
+            cpt=0
+            for i in range (1,len(zones)):
+                if state.player_state(idteam,idplayer).position.distance(zones[cpt].position+zones[cpt].l/2.)>state.player_state(idteam,idplayer).position.distance(zones[i].position+zones[i].l/2.):
+                    cpt=i
+            zone=zones[cpt]
+            if zone.position.x < state.ball.position.x+state.ball.vitesse.x and zone.position.x + zone.l > state.ball.position.x+state.ball.vitesse.x and zone.position.y < state.ball.position.y+state.ball.vitesse.y and zone.position.y + zone.l > state.ball.position.y+state.ball.vitesse.y:         
+            #if zone.dedans(state.ball.position+state.ball.vitesse):
                 return myaction.aller_vers_balle()
-            return SoccerAction(Vector2D(),0.03*(zone.position+zone.l/2.-mystate.my_position()))
+            return SoccerAction(Vector2D(),0.04*((zone.position+zone.l/2.)-mystate.my_position()))
 
 
-
-team1 = SoccerTeam()
-team2 = SoccerTeam()
-team1.add("John",Golfeur1())
-team2.add("John",DemoStrategy())
-simu = Parcours1(team1=team1,vitesse=GOLF)
-show_simu(simu)
-simu = Parcours2(team1=team1,vitesse=GOLF)
-show_simu(simu)
-simu = Parcours3(team1=team1,vitesse=SLALOM)
-show_simu(simu)
+#team1 = SoccerTeam()
+#team2 = SoccerTeam()
+#team1.add("John",Golfeur2())
+#team2.add("John",DemoStrategy())
+#simu = Parcours1(team1=team1,vitesse=GOLF)
+#show_simu(simu)
+#simu = Parcours2(team1=team1,vitesse=GOLF)
+#show_simu(simu)
+#simu = Parcours3(team1=team1,vitesse=SLALOM)
+#show_simu(simu)
 #simu = Parcours4(team1=team1,team2=team2,vitesse=SLALOM)
 #show_simu(simu)
