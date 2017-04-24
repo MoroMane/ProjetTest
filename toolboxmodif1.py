@@ -98,7 +98,7 @@ class MyState(object):
         return ((self.ball_positionX()>74 and self.ball_positionX()<76) and (self.ball_positionY()<46 and self.ball_positionY()>44))
 
     def def_position_action_2v2(self):
-        return abs((self.ball_position()-self.position_mon_but()).x) < 70
+        return abs((self.ball_position()-self.position_mon_but()).x) < 65
 
     def def_position_action_4v4(self):
         return abs((self.ball_position()-self.position_mon_but()).x) < 60
@@ -143,7 +143,7 @@ class MyAction(object):
 
     def pousse_ball_centre(self):
         if self.state.domicile():
-            return SoccerAction(Vector2D(),(Vector2D(0.5,3)))
+            return SoccerAction(Vector2D(),(Vector2D(0,10)))
         else :
             return SoccerAction(Vector2D(),(Vector2D(-1,-2)))
     
@@ -180,8 +180,8 @@ class MyAction(object):
         if not (self.state.peut_frapper()):
             return self.aller_vers_balle()
         else :
-#            if self.state.carre_central():
-#                return self.pousse_ball_centre()   
+            if self.state.carre_central():
+                return self.pousse_ball_centre()   
             if not (self.state.frappe_position()):
                 return self.pousse_ball()
             else :
@@ -236,3 +236,8 @@ class MyAction(object):
         else :
             return self.replacement_gardien_devant_but()
                 
+    def action_fonceur(self):
+        if not self.state.peut_frapper():
+            return self.aller_vers_balle()
+        else: 
+            return SoccerAction(Vector2D(),0.08*(self.state.position_but_adv()-self.state.my_position()))

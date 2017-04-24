@@ -37,6 +37,15 @@ class Fonceur(Strategy):
         else :
             return SoccerAction((vb-v1)+state.ball.vitesse,Vector2D())
         #return SoccerAction(vitesse,shoot)
+class Fonceur2(Strategy):
+    def __init__(self,name="Attaque"):
+        Strategy.__init__(self,name)
+    def compute_strategy(self,state,idteam,idplayer):
+        #faire qqe chose d intelligent
+    
+        mystate = toolboxmodif1.MyState(state,idteam,idplayer)
+        myaction= toolboxmodif1.MyAction(mystate)
+        return myaction.action_fonceur()
 
 ## Strategie aleatoire
 class RandomStrategy(Strategy):
@@ -118,21 +127,23 @@ class Attaque4Strategie(Strategy):
 team1 = SoccerTeam(name="team1",login="etu1")
 team2 = SoccerTeam(name="team2",login="etu2")
 
-#team1.add("Murasakibara",GardienStrategie())
-team1.add("Thran",DefenseStrategie_2v2())
-#team1.add("Thran",DefenseStrategie_4v4())
-#team1.add("pastore",MilieuStrategie())
+team1.add("Murasakibara",GardienStrategie())
+#team1.add("Thran",DefenseStrategie_2v2())
+team1.add("Thran",DefenseStrategie_4v4())
+team1.add("pastore",MilieuStrategie())
 #team1.add("Cavani",Attaque2Strategie())
 team1.add("D'Jok",Attaque4Strategie())
 #team1.add("Fonceur",Fonceur())
+#team1.add("Fonceur2",Fonceur2())
 ### #Strategie qui ne fait rien
-#team2.add("Paul",GardienStrategie())
-team2.add("Rocket",DefenseStrategie_4v4())
+team2.add("Paul",GardienStrategie())
+#team2.add("Rocket",DefenseStrategie_4v4())
 #team2.add("Rocket",DefenseStrategie_2v2())
 #team2.add("Kagami",MilieuStrategie())   #Strategie aleatoire
-team2.add("Landers",Attaque4Strategie())
+#team2.add("Landers",Attaque4Strategie())
 #team2.add("Landers",Attaque2Strategie())
-#team2.add("Landers",Fonceur())
+team2.add("Landers",Fonceur())
+#team2.add("Foceur2",Fonceur2())
 ###team2.add("Landers",RandomStrategy())
 ###Creation d'une partie
 simu = Simulation(team1,team2)
