@@ -15,8 +15,8 @@ from soccersimulator import SoccerTeam
 def get_golf_team():
     team1 = SoccerTeam()
     team1.add("John",Golfeur1())
-    
+    return team1
 def get_slalom_team1():
     team1 = SoccerTeam()
     team1.add("John",Golfeur2())
-    
+    return team1
